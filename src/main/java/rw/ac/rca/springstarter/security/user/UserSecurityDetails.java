@@ -20,7 +20,7 @@ public class UserSecurityDetails implements UserDetails {
         this.password=user.getPassword();
         System.out.println("Roles size: "+user.getRoles().size());
         user.getRoles().forEach(role -> {
-            UserAuthority userAuthority= new UserAuthority(user.getId(), role.name());
+            UserAuthority userAuthority= new UserAuthority(user.getId(), role.getRoleName());
             grantedAuthorities.add(userAuthority);
         });
     }

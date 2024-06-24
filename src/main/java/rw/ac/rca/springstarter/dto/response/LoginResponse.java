@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import rw.ac.rca.springstarter.enums.Roles;
+import rw.ac.rca.springstarter.model.Role;
 import rw.ac.rca.springstarter.model.User;
 
 import java.util.Set;
@@ -16,7 +17,7 @@ public class LoginResponse {
 
    public String token;
     public User userData;
-    public Set<Roles> userRole;
+    public Set<Role> userRole;
 
 
 }
