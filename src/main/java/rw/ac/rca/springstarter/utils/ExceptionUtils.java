@@ -15,7 +15,7 @@ public class ExceptionUtils {
                     false,
                     e.getMessage()
             ), HttpStatus.NOT_FOUND);
-        } else if(e instanceof InvalidUUIDException){
+        } else if(e instanceof InvalidLongException){
             return new ResponseEntity<>(new ApiResponse(
                     false,
                     e.getMessage()

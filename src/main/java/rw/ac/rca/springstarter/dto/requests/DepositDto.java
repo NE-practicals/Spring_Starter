@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @RequiredArgsConstructor
-public class ResetPasswordDTO {
-    String email;
-    String newPassword;
+public class DepositDto {
+
+    private Long accountId;
+    private Long amount;
+
 }
