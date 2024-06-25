@@ -5,6 +5,7 @@ import rw.ac.rca.springstarter.dto.requests.DepositDto;
 import rw.ac.rca.springstarter.dto.requests.TransferDto;
 import rw.ac.rca.springstarter.dto.requests.WithdrawDto;
 import rw.ac.rca.springstarter.model.Account;
+import rw.ac.rca.springstarter.model.Transaction;
 
 import java.util.List;
 
@@ -13,8 +14,11 @@ public interface AccountService {
     Account updateAccount(Long id, CreateAccountDto accountDto);
     void deleteAccount(Long id);
     List<Account> getAllAccounts();
+    Account getAccountByCustomerId(Long customerId);
     Account getAccountById(Long id);
     Account deposit(DepositDto depositDto);
     Account withdraw(WithdrawDto withdrawDto);
     void transfer(TransferDto transferDto);
+
+    List<Transaction> getAllTransactions();
 }

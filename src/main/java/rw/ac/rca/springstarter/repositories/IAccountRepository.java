@@ -5,8 +5,9 @@ import rw.ac.rca.springstarter.model.Account;
 
 import java.util.Optional;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface IAccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByAccountNumber(String accountNumber);
+    Optional<Account> findByCustomerId(Long customerId);
 
 
 }

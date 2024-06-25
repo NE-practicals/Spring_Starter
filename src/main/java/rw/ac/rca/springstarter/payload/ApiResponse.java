@@ -1,17 +1,21 @@
 package rw.ac.rca.springstarter.payload;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Data
-
-public class ApiResponse {
+public class  ApiResponse {
     private Boolean success;
     private String message;
     private Object data;
+
+
     public ApiResponse(boolean success, String message) {
         this.success = success;
         this.message = message;
@@ -23,6 +27,9 @@ public class ApiResponse {
         this.success = success;
         this.data = data;
     }
+
+
+
 
     public static ApiResponse success(Object data) {
         return new ApiResponse(true, data);
@@ -41,3 +48,4 @@ public class ApiResponse {
     }
 
 }
+

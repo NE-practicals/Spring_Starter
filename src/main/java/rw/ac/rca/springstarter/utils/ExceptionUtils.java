@@ -1,13 +1,13 @@
 package rw.ac.rca.springstarter.utils;
 
-import rw.ac.rca.springstarter.exceptions.*;
-import rw.ac.rca.springstarter.payload.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import rw.ac.rca.springstarter.exceptions.*;
+import rw.ac.rca.springstarter.payload.ApiResponse;
+
 
 public class ExceptionUtils {
     public static  <T> ResponseEntity<ApiResponse> handleControllerExceptions(Exception e) {
-
         System.out.println("Exception caught in controller:");
 
         if (e instanceof NotFoundException) {
@@ -15,7 +15,7 @@ public class ExceptionUtils {
                     false,
                     e.getMessage()
             ), HttpStatus.NOT_FOUND);
-        } else if(e instanceof InvalidLongException){
+        } else if(e instanceof InvalidUUIDException){
             return new ResponseEntity<>(new ApiResponse(
                     false,
                     e.getMessage()
@@ -48,6 +48,7 @@ public class ExceptionUtils {
             ), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     public static <T> void handleServiceExceptions(Exception e) {
         System.out.println("Exception caught in service:");
         if (e instanceof NotFoundException) {
@@ -64,4 +65,5 @@ public class ExceptionUtils {
             throw new RuntimeException("Failed!! Something went wrong " + e.getMessage(), e);
         }
     }
+
 }

@@ -1,45 +1,61 @@
 package rw.ac.rca.springstarter.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import rw.ac.rca.springstarter.dto.requests.CreateCustomerDto;
+import rw.ac.rca.springstarter.dto.requests.CreateCustomerDTO;
 import rw.ac.rca.springstarter.payload.ApiResponse;
-import rw.ac.rca.springstarter.serviceImpls.CustomerServiceImpl;
+import rw.ac.rca.springstarter.services.ICustomerService;
 import rw.ac.rca.springstarter.utils.ExceptionUtils;
 
-import javax.validation.Valid;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping("api/v1/customers")
-@Validated
+@RequestMapping("/api/v1/customers")
+@RequiredArgsConstructor
+@Slf4j
 public class CustomerController {
+    private  final ICustomerService customerService;
 
-private  final CustomerServiceImpl customerServiceImpl;
+    private Pageable pageable = null;
 
 
-
-
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse> getAllCustomers(){
-
-        try{
-
-            return ResponseEntity.ok(new ApiResponse(true,"Customers retrieved successfully",customerServiceImpl.getAllCustomers()));
-
+    @PostMapping("/create")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ApiResponse> createCustomer(@RequestBody CreateCustomerDTO createCustomerDTO) {
+        try {
+//            logAction(String.format("Request for creating a student with Full name :  %s , and email  :  %s", createCustomerDTO.getFirstName() + createCustomerDTO.getLastName() , createCustomerDTO.getEmail()));
+            return ResponseEntity.ok().body(new ApiResponse(
+                            true,
+                            "Customer created successfully",
+                            customerService.createCustomer(createCustomerDTO)
+                    )
+            );
         }catch (Exception e){
+            e.printStackTrace();
             return ExceptionUtils.handleControllerExceptions(e);
         }
+
+    }
+    @GetMapping ("/all")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<ApiResponse> getAllCustomers() {
+        try {
+//            logAction(String.format("Request for creating a student with Full name :  %s , and email  :  %s", createCustomerDTO.getFirstName() + createCustomerDTO.getLastName() , createCustomerDTO.getEmail()));
+            return ResponseEntity.ok().body(new ApiResponse(
+                            true,
+                            "Customer created successfully",
+                            customerService.getAllCustomers()
+                    )
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+            return ExceptionUtils.handleControllerExceptions(e);
+        }
+
     }
 
-    @PostMapping("/create_customer")
-    public ResponseEntity<ApiResponse> createCustomer(@RequestBody @Valid CreateCustomerDto createCustomerDto){
-        try{
-            return ResponseEntity.ok(new ApiResponse(true,"Customer created successfully",customerServiceImpl.createCustomer(createCustomerDto)));
-        }catch(Exception e){
-            return ExceptionUtils.handleControllerExceptions(e);
-        }
-    }
+
 }
+

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import rw.ac.rca.springstarter.audits.Initializer;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Account", uniqueConstraints = {@UniqueConstraint(columnNames = {"accountNumber"})})
 
-public class Account {
+public class Account extends Initializer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,23 +27,12 @@ public class Account {
     @Column(name = "balance", nullable = false)
     private Long balance;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne
     private Customer customer;
 
    @Column(name = "accountNumber" , nullable = false)
 
     private String accountNumber;
 
-    @Column(name = "lastUpdate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdate;
-    @PrePersist
-    public void prePersist() {
-        this.lastUpdate = new Date();
-    }
-    @PreUpdate
-    public void preUpdate() {
-        this.lastUpdate = new Date();
-    }
+
 }

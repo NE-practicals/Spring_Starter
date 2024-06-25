@@ -62,10 +62,28 @@ public class AccountController {
     public ResponseEntity<ApiResponse> transfer(@RequestBody @Valid TransferDto transferDto){
              try{
                 accountServiceImpl.transfer(transferDto);
-                return ResponseEntity.ok(new ApiResponse(true,"Account transferred successfully"));
+                return ResponseEntity.ok(new ApiResponse(true,"Transferred successfully"));
              }catch(Exception e){
                 return ExceptionUtils.handleControllerExceptions(e);
              }
         }
 
+    @GetMapping("/get_account_by_customer_id/{customerId}")
+    public ResponseEntity<ApiResponse> getAccountByCustomerId(@PathVariable Long customerId){
+             try{
+                return ResponseEntity.ok(new ApiResponse(true,"Account retrieved successfully",accountServiceImpl.getAccountByCustomerId(customerId)));
+             }catch(Exception e){
+                return ExceptionUtils.handleControllerExceptions(e);
+             }
+        }
+
+
+    @GetMapping("/get_transaction")
+    public ResponseEntity<ApiResponse> getAllTransactions(){
+             try{
+                return ResponseEntity.ok(new ApiResponse(true,"Transactions retrieved successfully",accountServiceImpl.getAllTransactions()));
+             }catch(Exception e){
+                return ExceptionUtils.handleControllerExceptions(e);
+             }
+   }
 }

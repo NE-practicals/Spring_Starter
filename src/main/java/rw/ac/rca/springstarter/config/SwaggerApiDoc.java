@@ -1,4 +1,4 @@
-package rw.ac.rca.springstarter.configs;
+package rw.ac.rca.springstarter.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.servlet.ServletContext;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +29,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerApiDoc extends WebMvcConfigurationSupport {
-
     private final ServletContext servletContext;
 
     @Autowired
@@ -77,7 +75,7 @@ public class SwaggerApiDoc extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2).directModelSubstitute(LocalDate.class, Date.class)
                 .pathProvider(new RelativePathProvider(servletContext) {
                 }).select().apis(RequestHandlerSelectors.basePackage(baseControllerPath))
-                .paths(PathSelectors.any()).build().apiInfo(apiInfo()).securitySchemes(Arrays.asList(apiKey()))
+                .paths(PathSelectors.any()).build().apiInfo(apiInfo()).securitySchemes(List.of(apiKey()))
                 .securityContexts(Collections.singletonList(securityContext()));
     }
 
@@ -100,4 +98,3 @@ public class SwaggerApiDoc extends WebMvcConfigurationSupport {
                 .termsOfServiceUrl("") .version("1.0").build();
     }
 }
-

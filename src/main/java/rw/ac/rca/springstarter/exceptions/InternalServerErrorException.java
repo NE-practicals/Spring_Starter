@@ -1,15 +1,26 @@
 package rw.ac.rca.springstarter.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.ResponseEntity;
+import rw.ac.rca.springstarter.dto.response.ErrorResponse;
+import rw.ac.rca.springstarter.dto.response.Response;
+import rw.ac.rca.springstarter.enums.EResponseType;
 
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class InternalServerErrorException extends RuntimeException{
-    public InternalServerErrorException(String message) {
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class InternalServerErrorException  extends RuntimeException{
+    public InternalServerErrorException(String message){
         super(message);
     }
 
-    public InternalServerErrorException(String message, Throwable cause) {
-        super(message, cause);
+    public ResponseEntity<?> getResponse(){
+        List<String> details = new ArrayList<>();
+        ErrorResponse errorResponse = new ErrorResponse(getMessage(),details);
+        Response<ErrorResponse> response = new Response<>();
+        response.setResponseType(EResponseType.LOGIN_FAILED);
+        response.setPayload(errorResponse);
+        return new ResponseEntity<Response>(response , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
